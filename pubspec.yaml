@@ -6,7 +6,7 @@ repository: https://github.com/emanuel-braz/save_note
 
 environment:
   sdk: ">=3.1.2 <4.0.0"
-  flutter: ">=1.17.0"
+  flutter: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
