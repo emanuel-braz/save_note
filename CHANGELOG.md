@@ -1,3 +1,6 @@
+## 0.1.1
+- Use root context as default
+
 ## 0.1.0
 
 * Initial release

@@ -1,6 +1,6 @@
 name: save_note
 description: "A lightweight tool for quickly send screenshots notes to Slack and other platforms."
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/emanuel-braz/save_note
 repository: https://github.com/emanuel-braz/save_note
 

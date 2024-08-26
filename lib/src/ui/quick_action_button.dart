@@ -12,11 +12,11 @@ class NoteQuickActionButton extends StatefulWidget {
   @override
   State<NoteQuickActionButton> createState() => _NoteQuickActionButtonState();
 
-  static void show(BuildContext context) {
+  static void show(BuildContext context, {bool rootOverlay = true}) {
     overlayEntry?.remove();
     overlayEntry = null;
 
-    OverlayState overlayState = Overlay.of(context);
+    OverlayState overlayState = Overlay.of(context, rootOverlay: rootOverlay);
 
     overlayEntry = OverlayEntry(
       builder: (context) => const NoteQuickActionButton(),
