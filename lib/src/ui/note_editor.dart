@@ -85,7 +85,7 @@ class _NoteEditorState extends State<NoteEditor> {
             controller: AppNoteController().drawing,
             background: Container(
               width: size.width,
-              height: size.height - 200,
+              height: size.height - 220,
               decoration: BoxDecoration(
                 color: Theme.of(context).highlightColor.withOpacity(0.2),
                 image: DecorationImage(
