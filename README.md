@@ -1,5 +1,5 @@
 # Save Note
-
+[![Pub Version](https://img.shields.io/pub/v/save_note?color=%2302569B&label=pub&logo=flutter)](https://pub.dev/packages/save_note) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 ## Getting Started
 
 ### Features
@@ -13,10 +13,13 @@ NoteQuickActionButton.show(context);
 * Tap the quick action button to take a screenshot and open the screenshot editor.
 * Drag the quick action button to move it around the screen.
 
+
+
+
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b838e388-0277-44e0-b5e1-8ec7a5a8bc68" alt="First Image" width="200"/>
-  <img src="https://github.com/user-attachments/assets/21794009-ed13-4e51-bd07-d07381c2e2a0" alt="Second Image" width="200"/>
-  <img src="https://github.com/user-attachments/assets/6c1de0b5-9f28-4d24-95f3-e4611e95c2b3" alt="Third Image" width="200"/>
+  <img src="https://github.com/user-attachments/assets/cc3b93ff-0e64-43e5-8300-909e0669caf2" alt="First Image" width="200"/>
+  <img src="https://github.com/user-attachments/assets/25e3a4ed-0fc8-4742-8e01-e959e98cd0d1" alt="Second Image" width="200"/>
+  <img src="https://github.com/user-attachments/assets/34195f66-1549-4852-82bb-8a46e816e552" alt="Third Image" width="200"/>
 </p>
 
 
@@ -103,3 +106,5 @@ For usage examples, please see the **example** project.
 
 Please note that this plugin does not handle the runtime permission checking process.
 Therefore, make sure you check the runtime permission first using the `permission_handler` plugin.
+
+<a href="https://www.buymeacoffee.com/emanuelbraz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 50px !important;width: 217px !important;" ></a>
