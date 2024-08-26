@@ -40,63 +40,65 @@ class _NoteEditorState extends State<NoteEditor> {
     final size = MediaQuery.sizeOf(context);
     EdgeInsets statusBar = MediaQuery.paddingOf(context);
 
-    return Container(
-      padding: EdgeInsets.only(top: statusBar.top + kToolbarHeight),
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Text('Save Note'),
-          leading: IconButton(
-            onPressed: () {
-              NoteQuickActionButton.show(context);
-              AppNoteController().clearDrawing();
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(Icons.clear),
-          ),
-          actions: [
-            PopupMenuButton<String>(
-              onSelected: _selectMenuItem,
-              itemBuilder: (BuildContext context) {
-                return AppNoteController()
-                    .noteSenders
-                    .keys
-                    .map((String option) {
-                  final noteSender = AppNoteController().noteSenders[option];
-
-                  return PopupMenuItem<String>(
-                    value: option,
-                    child: Row(
-                      children: [
-                        NoteSenderIcon(noteSender?.icon),
-                        const SizedBox(width: 10),
-                        Text(noteSender?.channelName ?? 'No name'),
-                      ],
-                    ),
-                  );
-                }).toList();
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.only(top: statusBar.top + kToolbarHeight),
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: const Text('Save Note'),
+            leading: IconButton(
+              onPressed: () {
+                NoteQuickActionButton.show(context);
+                AppNoteController().clearDrawing();
+                Navigator.of(context).pop();
               },
-              icon: const Icon(Icons.share),
+              icon: const Icon(Icons.clear),
             ),
-          ],
-        ),
-        body: DrawingBoard(
-          controller: AppNoteController().drawing,
-          background: Container(
-            width: size.width,
-            height: size.height - 200,
-            decoration: BoxDecoration(
-              color: Theme.of(context).highlightColor.withOpacity(0.2),
-              image: DecorationImage(
-                image: widget.image.image,
-                fit: BoxFit.fitHeight,
+            actions: [
+              PopupMenuButton<String>(
+                onSelected: _selectMenuItem,
+                itemBuilder: (BuildContext context) {
+                  return AppNoteController()
+                      .noteSenders
+                      .keys
+                      .map((String option) {
+                    final noteSender = AppNoteController().noteSenders[option];
+
+                    return PopupMenuItem<String>(
+                      value: option,
+                      child: Row(
+                        children: [
+                          NoteSenderIcon(noteSender?.icon),
+                          const SizedBox(width: 10),
+                          Text(noteSender?.channelName ?? 'No name'),
+                        ],
+                      ),
+                    );
+                  }).toList();
+                },
+                icon: const Icon(Icons.share),
+              ),
+            ],
+          ),
+          body: DrawingBoard(
+            controller: AppNoteController().drawing,
+            background: Container(
+              width: size.width,
+              height: size.height - 200,
+              decoration: BoxDecoration(
+                color: Theme.of(context).highlightColor.withOpacity(0.2),
+                image: DecorationImage(
+                  image: widget.image.image,
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ),
+            showDefaultActions: true,
+            showDefaultTools: true,
+            boardBoundaryMargin: const EdgeInsets.all(100),
+            clipBehavior: Clip.none,
           ),
-          showDefaultActions: true,
-          showDefaultTools: true,
-          boardBoundaryMargin: const EdgeInsets.all(100),
-          clipBehavior: Clip.none,
         ),
       ),
     );
