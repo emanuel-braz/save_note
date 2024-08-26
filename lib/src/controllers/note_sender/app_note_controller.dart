@@ -10,6 +10,8 @@ class AppNoteController extends ChangeNotifier {
   DrawingController get drawing => _drawing;
 
   final Map<String, NoteSender> _noteSenders = {};
+
+  /// Returns a map of note senders
   Map<String, NoteSender> get noteSenders => _noteSenders;
 
   static final AppNoteController _instance = AppNoteController._internal();
@@ -22,6 +24,7 @@ class AppNoteController extends ChangeNotifier {
     _drawing = DrawingController();
   }
 
+  /// Adds a note sender to the list of note senders
   addNoteSender(NoteSender sender) {
     if (_noteSenders.containsKey(sender.id)) {
       debugPrint('NoteSender ${sender.id} already exists');
@@ -31,18 +34,21 @@ class AppNoteController extends ChangeNotifier {
     _noteSenders[sender.id] = sender;
   }
 
+  /// Adds a list of note senders to the list of note senders
   addNoteSenders(List<NoteSender> senders) {
     for (var sender in senders) {
       _noteSenders[sender.id] = sender;
     }
   }
 
+  /// Removes a note sender from the list of note senders
   removeNoteSender(String id) {
     if (_noteSenders.containsKey(id)) {
       _noteSenders.remove(id);
     }
   }
 
+  /// Creates a note
   void createNote(BuildContext context) async {
     FlutterNativeScreenshot.takeScreenshot().then((path) {
       debugPrint('Screenshot taken: $path');
@@ -75,6 +81,7 @@ class AppNoteController extends ChangeNotifier {
         )
       };
 
+  /// Clears the drawing
   clearDrawing() {
     _drawing.clear();
   }

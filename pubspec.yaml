@@ -1,16 +1,17 @@
 name: save_note
 description: "A lightweight tool for quickly send screenshots notes to Slack and other platforms."
 version: 0.1.0
+homepage: https://github.com/emanuel-braz/save_note
+repository: https://github.com/emanuel-braz/save_note
 
 environment:
-  sdk: '>=3.1.2 <4.0.0'
+  sdk: ">=3.1.2 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-
   http: ^1.2.2
   http_parser: ^4.0.2
   flutter_drawing_board: ^0.9.2

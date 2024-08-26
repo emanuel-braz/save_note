@@ -6,6 +6,7 @@ class UploadURLExternal {
 
   UploadURLExternal({required this.url, required this.fileId});
 
+  /// Returns a map
   Map<String, dynamic> toMap() {
     return {
       'upload_url': url,
@@ -13,6 +14,7 @@ class UploadURLExternal {
     };
   }
 
+  /// Returns a UploadURLExternal from a map
   factory UploadURLExternal.fromMap(Map<String, dynamic> map) {
     return UploadURLExternal(
       url: map['upload_url'],
@@ -20,7 +22,10 @@ class UploadURLExternal {
     );
   }
 
+  /// Returns a JSON string
   String toJson() => jsonEncode(toMap());
 
-  factory UploadURLExternal.fromJson(String source) => UploadURLExternal.fromMap(jsonDecode(source));
+  /// Returns a UploadURLExternal from a JSON string
+  factory UploadURLExternal.fromJson(String source) =>
+      UploadURLExternal.fromMap(jsonDecode(source));
 }

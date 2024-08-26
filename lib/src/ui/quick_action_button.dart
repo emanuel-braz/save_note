@@ -85,7 +85,8 @@ class _NoteQuickActionButtonState extends State<NoteQuickActionButton> {
                   color: Theme.of(context).primaryColor,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.camera_alt_rounded, color: Colors.white),
+                child:
+                    const Icon(Icons.camera_alt_rounded, color: Colors.white),
               ),
             ),
           ),

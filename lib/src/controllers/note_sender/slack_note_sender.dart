@@ -29,8 +29,12 @@ class SlackNoteSender extends NoteSender {
     super.onError,
   }) : super(icon: 'assets/slack_icon.png');
 
+  /// Sends a note to Slack
   @override
-  Future<bool> sendNote({required Uint8List imageData, required BuildContext context, String message = ''}) async {
+  Future<bool> sendNote(
+      {required Uint8List imageData,
+      required BuildContext context,
+      String message = ''}) async {
     return _postImage(
       imageData: imageData,
       context: context,
@@ -48,7 +52,8 @@ class SlackNoteSender extends NoteSender {
         },
         body: jsonEncode({
           'channel': channel,
-          'text': userName?.isNotEmpty == true ? '$userName: $message' : message,
+          'text':
+              userName?.isNotEmpty == true ? '$userName: $message' : message,
           'username': slackUsername,
           'icon_url': userIconUrl,
           'icon_emoji': userIconEmoji,
@@ -57,7 +62,8 @@ class SlackNoteSender extends NoteSender {
     final responseBody = SlackResponse.fromJson(response.body);
 
     if (!responseBody.ok) {
-      throw Exception('Failed to send feedback to Slack\n${responseBody.error}');
+      throw Exception(
+          'Failed to send feedback to Slack\n${responseBody.error}');
     }
   }
 
@@ -69,7 +75,8 @@ class SlackNoteSender extends NoteSender {
     final completer = Completer<bool>();
 
     try {
-      final urlExternal = await getUploadURLExternal(imageData: imageData, channel: channelId, message: message);
+      final urlExternal = await getUploadURLExternal(
+          imageData: imageData, channel: channelId, message: message);
       late StreamedResponse response;
 
       final request = MultipartRequest('POST', Uri.parse(urlExternal.url))
@@ -79,7 +86,8 @@ class SlackNoteSender extends NoteSender {
         ..files.add(MultipartFile.fromBytes(
           'file',
           imageData,
-          filename: '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png',
+          filename:
+              '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png',
           contentType: MediaType('image', 'png'),
         ));
 
@@ -95,7 +103,8 @@ class SlackNoteSender extends NoteSender {
           onError?.call('Failed to send feedback to Slack\n$result');
           completer.completeError('Failed to send feedback to Slack\n$result');
         } else {
-          await completeUploadExternal(fileId: urlExternal.fileId, channel: channelId, message: message);
+          await completeUploadExternal(
+              fileId: urlExternal.fileId, channel: channelId, message: message);
           onSuccess?.call();
           completer.complete(true);
         }
@@ -109,6 +118,7 @@ class SlackNoteSender extends NoteSender {
     }
   }
 
+  /// Gets the upload URL for an external file
   Future<UploadURLExternal> getUploadURLExternal({
     required Uint8List imageData,
     required String channel,
@@ -116,7 +126,8 @@ class SlackNoteSender extends NoteSender {
   }) async {
     const String url = 'https://slack.com/api/files.getUploadURLExternal';
     final queryParams = {
-      'filename': '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png',
+      'filename':
+          '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png',
       'length': '${imageData.length}',
     };
     final Uri uri = Uri.parse(url).replace(queryParameters: queryParams);
@@ -141,6 +152,7 @@ class SlackNoteSender extends NoteSender {
     }
   }
 
+  /// Completes the upload of an external file
   Future<void> completeUploadExternal({
     required String fileId,
     required String channel,
@@ -158,7 +170,11 @@ class SlackNoteSender extends NoteSender {
         'channel_id': channel,
         'initial_comment': message,
         'files': [
-          {"id": fileId, "title": '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png'}
+          {
+            "id": fileId,
+            "title":
+                '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png'
+          }
         ],
       }),
     );
@@ -168,7 +184,8 @@ class SlackNoteSender extends NoteSender {
       if (responseData['ok']) {
         debugPrint('File upload completed successfully!');
       } else {
-        throw Exception('Failed to complete file upload: ${responseData['error']}');
+        throw Exception(
+            'Failed to complete file upload: ${responseData['error']}');
       }
     } else {
       throw Exception('Failed to complete file upload: ${response.statusCode}');

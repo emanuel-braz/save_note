@@ -10,6 +10,7 @@ abstract class NoteSender {
   final void Function()? onSuccess;
   final void Function(dynamic error)? onError;
 
+  /// Sends a note
   Future<bool> sendNote({
     required Uint8List imageData,
     required BuildContext context,

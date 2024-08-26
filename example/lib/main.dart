@@ -71,8 +71,12 @@ class CustomNoteSender extends NoteSender {
   CustomNoteSender() : super(channelName: 'Custom Note Sender');
 
   @override
-  Future<bool> sendNote({required Uint8List imageData, required BuildContext context, String message = ''}) async {
-    debugPrint('[CustomNoteSender]\n\nMessage: $message\nImage length:${imageData.length}\n\n');
+  Future<bool> sendNote(
+      {required Uint8List imageData,
+      required BuildContext context,
+      String message = ''}) async {
+    debugPrint(
+        '[CustomNoteSender]\n\nMessage: $message\nImage length:${imageData.length}\n\n');
     return true;
   }
 }

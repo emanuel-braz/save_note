@@ -6,6 +6,7 @@ class SlackResponse {
 
   SlackResponse({required this.ok, this.error});
 
+  /// Returns a map
   Map<String, dynamic> toMap() {
     return {
       'ok': ok,
@@ -13,6 +14,7 @@ class SlackResponse {
     };
   }
 
+  /// Returns a SlackResponse from a map
   factory SlackResponse.fromMap(Map<String, dynamic> map) {
     return SlackResponse(
       ok: map['ok'],
@@ -20,7 +22,10 @@ class SlackResponse {
     );
   }
 
+  /// Returns a JSON string
   String toJson() => jsonEncode(toMap());
 
-  factory SlackResponse.fromJson(String source) => SlackResponse.fromMap(json.decode(source));
+  /// Returns a SlackResponse from a JSON string
+  factory SlackResponse.fromJson(String source) =>
+      SlackResponse.fromMap(json.decode(source));
 }
