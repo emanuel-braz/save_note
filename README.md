@@ -13,6 +13,13 @@ NoteQuickActionButton.show(context);
 * Tap the quick action button to take a screenshot and open the screenshot editor.
 * Drag the quick action button to move it around the screen.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b838e388-0277-44e0-b5e1-8ec7a5a8bc68" alt="First Image" width="200"/>
+  <img src="https://github.com/user-attachments/assets/21794009-ed13-4e51-bd07-d07381c2e2a0" alt="Second Image" width="200"/>
+  <img src="https://github.com/user-attachments/assets/6c1de0b5-9f28-4d24-95f3-e4611e95c2b3" alt="Third Image" width="200"/>
+</p>
+
+
 ### Configuration
 ```dart
 @override
