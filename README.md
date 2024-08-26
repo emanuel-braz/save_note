@@ -1,5 +1,5 @@
 # Save Note
-
+[![Pub Version](https://img.shields.io/pub/v/save_note?color=%2302569B&label=pub&logo=flutter)](https://pub.dev/packages/save_note) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 ## Getting Started
 
 ### Features
@@ -103,3 +103,5 @@ For usage examples, please see the **example** project.
 
 Please note that this plugin does not handle the runtime permission checking process.
 Therefore, make sure you check the runtime permission first using the `permission_handler` plugin.
+
+<a href="https://www.buymeacoffee.com/emanuelbraz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 50px !important;width: 217px !important;" ></a>
