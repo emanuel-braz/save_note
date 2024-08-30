@@ -13,11 +13,10 @@
 NoteQuickActionButton.show(context);
 ```
 
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/cc3b93ff-0e64-43e5-8300-909e0669caf2" alt="First Image" width="200"/>
-  <img src="https://github.com/user-attachments/assets/25e3a4ed-0fc8-4742-8e01-e959e98cd0d1" alt="Second Image" width="200"/>
-  <img src="https://github.com/user-attachments/assets/34195f66-1549-4852-82bb-8a46e816e552" alt="Third Image" width="200"/>
+  <img src="https://github.com/user-attachments/assets/957b9a5f-4df6-47a2-ac31-9cfd2aaefffb" alt="Second Image" width="200"/>
+  <img src="https://github.com/user-attachments/assets/099bdfab-d274-479d-8c2c-ad6bab506117" alt="Third Image" width="200"/>
 </p>
 
 ### Configuration
