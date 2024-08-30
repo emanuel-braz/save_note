@@ -9,6 +9,17 @@ import 'package:http_parser/http_parser.dart';
 
 import '../../../save_note.dart';
 
+/// Create a Slack App, and get the token from the OAuth & Permissions section (xoxb-...)
+/// https://api.slack.com/apps/
+///
+/// Bot Token Scopes are required to send messages to Slack
+///
+/// chat:write - Send messages as Save Note App
+/// files:read - View files shared in channels and conversations that Save Note App has been added to
+/// files:write - Upload, edit, and delete files as Save Note App
+///
+/// [Optional] chat:write.public Send messages to channels App isn't a member of
+
 class SlackNoteSender extends NoteSender {
   final String token;
   final String channelId;
@@ -16,25 +27,30 @@ class SlackNoteSender extends NoteSender {
   final String? slackUsername;
   final String? userIconUrl;
   final String? userIconEmoji;
+  final Client? client;
 
   SlackNoteSender({
-    required super.channelName,
+    required super.name,
     required this.token,
     required this.channelId,
+    this.client,
     this.userName,
     this.slackUsername,
     this.userIconUrl,
     this.userIconEmoji = ':robot:',
     super.onSuccess,
     super.onError,
+    super.defaultExtras,
   }) : super(icon: 'assets/slack_icon.png');
 
   /// Sends a note to Slack
   @override
-  Future<bool> sendNote(
-      {required Uint8List imageData,
-      required BuildContext context,
-      String message = ''}) async {
+  Future<bool> sendNote({
+    required Uint8List imageData,
+    required BuildContext context,
+    Map<String, dynamic>? extras,
+    String message = '',
+  }) async {
     return _postImage(
       imageData: imageData,
       context: context,
@@ -43,8 +59,14 @@ class SlackNoteSender extends NoteSender {
   }
 
   // ignore: unused_element
-  _postMessage(String message, String channel) async {
+  _postMessage(String message, String channel, Map<String, dynamic>? extra) async {
     const url = 'https://slack.com/api/chat.postMessage';
+    String messageToSend = userName?.isNotEmpty == true ? '$userName: $message' : message;
+
+    if (extra != null) {
+      messageToSend += '\n\n${jsonEncode(extra)}';
+    }
+
     final response = await Client().post(Uri.parse(url),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
@@ -52,8 +74,7 @@ class SlackNoteSender extends NoteSender {
         },
         body: jsonEncode({
           'channel': channel,
-          'text':
-              userName?.isNotEmpty == true ? '$userName: $message' : message,
+          'text': messageToSend,
           'username': slackUsername,
           'icon_url': userIconUrl,
           'icon_emoji': userIconEmoji,
@@ -62,8 +83,7 @@ class SlackNoteSender extends NoteSender {
     final responseBody = SlackResponse.fromJson(response.body);
 
     if (!responseBody.ok) {
-      throw Exception(
-          'Failed to send feedback to Slack\n${responseBody.error}');
+      throw Exception('Failed to send feedback to Slack\n${responseBody.error}');
     }
   }
 
@@ -75,8 +95,7 @@ class SlackNoteSender extends NoteSender {
     final completer = Completer<bool>();
 
     try {
-      final urlExternal = await getUploadURLExternal(
-          imageData: imageData, channel: channelId, message: message);
+      final urlExternal = await getUploadURLExternal(imageData: imageData, channel: channelId, message: message);
       late StreamedResponse response;
 
       final request = MultipartRequest('POST', Uri.parse(urlExternal.url))
@@ -86,8 +105,7 @@ class SlackNoteSender extends NoteSender {
         ..files.add(MultipartFile.fromBytes(
           'file',
           imageData,
-          filename:
-              '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png',
+          filename: '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png',
           contentType: MediaType('image', 'png'),
         ));
 
@@ -103,8 +121,7 @@ class SlackNoteSender extends NoteSender {
           onError?.call('Failed to send feedback to Slack\n$result');
           completer.completeError('Failed to send feedback to Slack\n$result');
         } else {
-          await completeUploadExternal(
-              fileId: urlExternal.fileId, channel: channelId, message: message);
+          await completeUploadExternal(fileId: urlExternal.fileId, channel: channelId, message: message);
           onSuccess?.call();
           completer.complete(true);
         }
@@ -126,13 +143,13 @@ class SlackNoteSender extends NoteSender {
   }) async {
     const String url = 'https://slack.com/api/files.getUploadURLExternal';
     final queryParams = {
-      'filename':
-          '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png',
+      'filename': '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png',
       'length': '${imageData.length}',
     };
     final Uri uri = Uri.parse(url).replace(queryParameters: queryParams);
+    final client = this.client ?? Client();
 
-    final response = await Client().get(
+    final response = await client.get(
       uri,
       headers: {
         'Authorization': 'Bearer $token',
@@ -160,7 +177,13 @@ class SlackNoteSender extends NoteSender {
   }) async {
     const String url = 'https://slack.com/api/files.completeUploadExternal';
 
-    final response = await Client().post(
+    if (defaultExtras != null) {
+      message += '\n\n${jsonEncode(defaultExtras)}';
+    }
+
+    final client = this.client ?? Client();
+
+    final response = await client.post(
       Uri.parse(url),
       headers: {
         'Authorization': 'Bearer $token',
@@ -170,11 +193,7 @@ class SlackNoteSender extends NoteSender {
         'channel_id': channel,
         'initial_comment': message,
         'files': [
-          {
-            "id": fileId,
-            "title":
-                '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png'
-          }
+          {"id": fileId, "title": '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png'}
         ],
       }),
     );
@@ -184,8 +203,7 @@ class SlackNoteSender extends NoteSender {
       if (responseData['ok']) {
         debugPrint('File upload completed successfully!');
       } else {
-        throw Exception(
-            'Failed to complete file upload: ${responseData['error']}');
+        throw Exception('Failed to complete file upload: ${responseData['error']}');
       }
     } else {
       throw Exception('Failed to complete file upload: ${response.statusCode}');

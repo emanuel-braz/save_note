@@ -49,7 +49,7 @@ class AppNoteController extends ChangeNotifier {
   }
 
   /// Creates a note
-  void createNote(BuildContext context) async {
+  void createNote(BuildContext context, {bool showQuickActionButtonOnDispose = true}) async {
     FlutterNativeScreenshot.takeScreenshot().then((path) {
       debugPrint('Screenshot taken: $path');
 
@@ -65,11 +65,11 @@ class AppNoteController extends ChangeNotifier {
         fit: BoxFit.contain,
       );
 
-      _openFullScreenModal(context, image);
+      _openFullScreenModal(context, image, showQuickActionButtonOnDispose: showQuickActionButtonOnDispose);
     });
   }
 
-  void _openFullScreenModal(BuildContext context, Image image) => {
+  void _openFullScreenModal(BuildContext context, Image image, {bool showQuickActionButtonOnDispose = true}) => {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
@@ -78,7 +78,11 @@ class AppNoteController extends ChangeNotifier {
           builder: (BuildContext context) {
             return NoteEditor(image);
           },
-        )
+        ).whenComplete(() {
+          if (showQuickActionButtonOnDispose == true) {
+            NoteQuickActionButton.show(context);
+          }
+        })
       };
 
   /// Clears the drawing

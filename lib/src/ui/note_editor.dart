@@ -49,7 +49,6 @@ class _NoteEditorState extends State<NoteEditor> {
             title: const Text('Save Note'),
             leading: IconButton(
               onPressed: () {
-                NoteQuickActionButton.show(context);
                 AppNoteController().clearDrawing();
                 Navigator.of(context).pop();
               },
@@ -59,10 +58,7 @@ class _NoteEditorState extends State<NoteEditor> {
               PopupMenuButton<String>(
                 onSelected: _selectMenuItem,
                 itemBuilder: (BuildContext context) {
-                  return AppNoteController()
-                      .noteSenders
-                      .keys
-                      .map((String option) {
+                  return AppNoteController().noteSenders.keys.map((String option) {
                     final noteSender = AppNoteController().noteSenders[option];
 
                     return PopupMenuItem<String>(
@@ -71,7 +67,7 @@ class _NoteEditorState extends State<NoteEditor> {
                         children: [
                           NoteSenderIcon(noteSender?.icon),
                           const SizedBox(width: 10),
-                          Text(noteSender?.channelName ?? 'No name'),
+                          Text(noteSender?.name ?? 'No name'),
                         ],
                       ),
                     );

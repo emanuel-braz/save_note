@@ -5,15 +5,13 @@
 ### Features
 * In the screenshot editor, you can add notes, draw on the screenshot, and send it to Slack and to other services (**see CustomNoteSender example**).
 * Activate a quick action button that allows you to save the screenshot of the current screen and send it to a Slack channel with a note.
-```dart
-NoteQuickActionButton.show(context);
-```
-
 * Long press the quick action button to dismiss it.
 * Tap the quick action button to take a screenshot and open the screenshot editor.
 * Drag the quick action button to move it around the screen.
 
-
+```dart
+NoteQuickActionButton.show(context);
+```
 
 
 <p align="center">
@@ -21,7 +19,6 @@ NoteQuickActionButton.show(context);
   <img src="https://github.com/user-attachments/assets/25e3a4ed-0fc8-4742-8e01-e959e98cd0d1" alt="Second Image" width="200"/>
   <img src="https://github.com/user-attachments/assets/34195f66-1549-4852-82bb-8a46e816e552" alt="Third Image" width="200"/>
 </p>
-
 
 ### Configuration
 ```dart
@@ -37,7 +34,7 @@ NoteQuickActionButton.show(context);
       SlackNoteSender(
         token: const String.fromEnvironment('SLACK_API_TOKEN'), // Slack API token (xoxb-...) - You can get it from https://api.slack.com/apps
         channelId: const String.fromEnvironment('SLACK_CHANNEL_ID_QA'), // Slack channel ID (public or private)
-        channelName: 'QA Team Notes', // Slack channel name, it can be anything, it's just for display purposes
+        name: 'QA Team Notes',
         // Optional
         onSuccess: () {
           debugPrint('✨ Note sent to Slack!');
@@ -45,6 +42,18 @@ NoteQuickActionButton.show(context);
         // Optional
         onError: (error) {
           debugPrint('🚫 Error sending note to Slack: $error');
+        },
+      ),
+      GitlabNoteSender(
+        projectId: const String.fromEnvironment('GITLAB_PROJECT_ID'),
+        token: const String.fromEnvironment('GITLAB_TOKEN'),
+        name: 'Gitlab Issues',
+        gitlabExtras: GitlabExtras(labels: 'my_notes'), // Initial value - Comma separated labels
+        onSuccess: () {
+          debugPrint('✨ Note sent to Gitlab!');
+        },
+        onError: (error) {
+          debugPrint('🚫 Error sending note to Gitlab: $error');
         },
       ),
       CustomNoteSender(), // CustomNoteSender is a custom implementation of NoteSender that I created for this example (see example project)
@@ -101,6 +110,35 @@ For iOS platform, you need to add the following permissions into the **Info.plis
 ### Usage Example
 
 For usage examples, please see the **example** project.
+
+### Built-in Widgets
+#### `ThreeFingerTapDetector`
+```dart
+MaterialApp(
+  home: ThreeFingerTapDetector(
+    child: Center(
+      child: Text(
+        'Tap with three fingers to show the screenshot editor.',
+        style: TextStyle(color: Colors.white),
+      ),
+    ),
+  ),
+),
+```
+
+#### `TapCounter`
+```dart
+TapCounter(
+  requiredTaps: 5,
+  onSuccess: () {
+    NoteQuickActionButton.show(context);
+  },
+  child: OutlinedButton(
+    onPressed: () async {},
+    child: const Text('Tap 5 times'),
+  ),
+),
+```
 
 ### Important Notes
 
