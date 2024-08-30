@@ -4,7 +4,8 @@ import '../../../save_note.dart';
 import 'note_form_input.dart';
 
 class GitlabFormFieldFactory {
-  static List<NoteFormField> getNoteFormFieldFromGilabExtras(GitlabExtras? extras) {
+  static List<NoteFormField> getNoteFormFieldFromGilabExtras(
+      GitlabExtras? extras) {
     if (extras == null) return [];
 
     final List<NoteFormField> formFields = [];
@@ -28,17 +29,21 @@ class GitlabFormFieldFactory {
       name: 'weight',
       type: int,
       controller: TextEditingController(text: extras.weight?.toString() ?? ''),
-      hint: 'The weight of the issue. Valid values are greater than or equal to 0. Premium and Ultimate only.',
+      hint:
+          'The weight of the issue. Valid values are greater than or equal to 0. Premium and Ultimate only.',
     ));
 
     formFields.add(NoteFormField(
       name: 'issue_type',
       type: String,
       controller: TextEditingController(text: extras.issue_type ?? ''),
-      hint: 'The type of issue. One of issue, incident, test_case or task. Default is issue.',
+      hint:
+          'The type of issue. One of issue, incident, test_case or task. Default is issue.',
       customBuilder: (context, TextEditingController controller) {
-        final issueTypes = List<String>.from(['issue', 'incident', 'test_case', 'task']);
-        final initialText = issueTypes.contains(controller.text) ? controller.text : null;
+        final issueTypes =
+            List<String>.from(['issue', 'incident', 'test_case', 'task']);
+        final initialText =
+            issueTypes.contains(controller.text) ? controller.text : null;
 
         return DropdownButtonFormField<String>(
           hint: const Text('Select issue type (default is "issue")'),

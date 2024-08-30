@@ -75,7 +75,8 @@ class GitlabNoteSender extends NoteSender {
       extrasMixed.addAll(extras ?? {});
 
       final uri = Uri.https(baseUrl, '/api/v4/projects/$projectId/uploads');
-      final fileName = '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png';
+      final fileName =
+          '${DateTime.now().toIso8601String()}-${Random().nextInt(1000)}.png';
 
       final uploadRequest = MultipartRequest('POST', uri)
         ..headers['PRIVATE-TOKEN'] = token
@@ -97,7 +98,8 @@ class GitlabNoteSender extends NoteSender {
 
       final responseBody = jsonDecode(uploadResponse.body);
       final markdownImage = responseBody['markdown'];
-      final imageInDescription = 'Image: ${markdownImage ?? '[Error]: Missing image!'}';
+      final imageInDescription =
+          'Image: ${markdownImage ?? '[Error]: Missing image!'}';
 
       final description = extrasMixed['description'] ?? '';
       extrasMixed['description'] = '$description\n\n$imageInDescription';

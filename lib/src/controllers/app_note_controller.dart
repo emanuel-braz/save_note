@@ -49,7 +49,8 @@ class AppNoteController extends ChangeNotifier {
   }
 
   /// Creates a note
-  void createNote(BuildContext context, {bool showQuickActionButtonOnDispose = true}) async {
+  void createNote(BuildContext context,
+      {bool showQuickActionButtonOnDispose = true}) async {
     FlutterNativeScreenshot.takeScreenshot().then((path) {
       debugPrint('Screenshot taken: $path');
 
@@ -65,11 +66,14 @@ class AppNoteController extends ChangeNotifier {
         fit: BoxFit.contain,
       );
 
-      _openFullScreenModal(context, image, showQuickActionButtonOnDispose: showQuickActionButtonOnDispose);
+      _openFullScreenModal(context, image,
+          showQuickActionButtonOnDispose: showQuickActionButtonOnDispose);
     });
   }
 
-  void _openFullScreenModal(BuildContext context, Image image, {bool showQuickActionButtonOnDispose = true}) => {
+  void _openFullScreenModal(BuildContext context, Image image,
+          {bool showQuickActionButtonOnDispose = true}) =>
+      {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,

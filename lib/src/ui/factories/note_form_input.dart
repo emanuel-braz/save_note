@@ -5,7 +5,8 @@ class NoteFormField {
   final Type type;
   final TextEditingController controller;
   final String? hint;
-  final Widget Function(BuildContext context, TextEditingController controller)? customBuilder;
+  final Widget Function(BuildContext context, TextEditingController controller)?
+      customBuilder;
 
   NoteFormField({
     required this.name,
@@ -20,7 +21,8 @@ class NoteFormField {
 
     return TextFormField(
       controller: controller,
-      keyboardType: type == int ? TextInputType.number : TextInputType.multiline,
+      keyboardType:
+          type == int ? TextInputType.number : TextInputType.multiline,
       maxLines: name == 'description' ? 5 : 2,
       minLines: name == 'description' ? 2 : 1,
       decoration: InputDecoration(

@@ -44,7 +44,8 @@ class _MainAppState extends State<MainApp> {
         projectId: const String.fromEnvironment('GITLAB_PROJECT_ID'),
         token: const String.fromEnvironment('GITLAB_TOKEN'),
         name: 'Gitlab Issues',
-        gitlabExtras: GitlabExtras(labels: 'bug'), // initial value - Comma separated labels
+        gitlabExtras: GitlabExtras(
+            labels: 'bug'), // initial value - Comma separated labels
         onSuccess: () {
           debugPrint('✨ Note sent to Gitlab!');
         },
@@ -105,7 +106,8 @@ class CustomNoteSender extends NoteSender {
       required BuildContext context,
       Map<String, dynamic>? extras,
       String message = ''}) async {
-    debugPrint('[CustomNoteSender]\n\nMessage: $message\nImage length:${imageData.length}\n\n');
+    debugPrint(
+        '[CustomNoteSender]\n\nMessage: $message\nImage length:${imageData.length}\n\n');
     return true;
   }
 }

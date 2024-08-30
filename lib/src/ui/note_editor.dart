@@ -58,7 +58,10 @@ class _NoteEditorState extends State<NoteEditor> {
               PopupMenuButton<String>(
                 onSelected: _selectMenuItem,
                 itemBuilder: (BuildContext context) {
-                  return AppNoteController().noteSenders.keys.map((String option) {
+                  return AppNoteController()
+                      .noteSenders
+                      .keys
+                      .map((String option) {
                     final noteSender = AppNoteController().noteSenders[option];
 
                     return PopupMenuItem<String>(

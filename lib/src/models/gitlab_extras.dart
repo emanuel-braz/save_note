@@ -51,7 +51,8 @@ class GitlabExtras {
       'iid': iid,
       'issue_type': issue_type,
       'labels': labels,
-      'merge_request_to_resolve_discussions_of': merge_request_to_resolve_discussions_of,
+      'merge_request_to_resolve_discussions_of':
+          merge_request_to_resolve_discussions_of,
       'milestone_id': milestone_id,
       'weight': weight,
     };
@@ -71,7 +72,8 @@ class GitlabExtras {
       iid: map['iid'],
       issue_type: map['issue_type'],
       labels: map['labels'],
-      merge_request_to_resolve_discussions_of: map['merge_request_to_resolve_discussions_of'],
+      merge_request_to_resolve_discussions_of:
+          map['merge_request_to_resolve_discussions_of'],
       milestone_id: map['milestone_id'],
       weight: map['weight'],
     );
@@ -79,5 +81,6 @@ class GitlabExtras {
 
   String toJson() => json.encode(toMap());
 
-  factory GitlabExtras.fromJson(String source) => GitlabExtras.fromMap(json.decode(source));
+  factory GitlabExtras.fromJson(String source) =>
+      GitlabExtras.fromMap(json.decode(source));
 }

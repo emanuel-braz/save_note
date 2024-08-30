@@ -46,6 +46,7 @@ class _ThreeFingerTapDetectorState extends State<ThreeFingerTapDetector> {
   }
 
   void _onThreeFingerTap() {
-    AppNoteController().createNote(context, showQuickActionButtonOnDispose: false);
+    AppNoteController()
+        .createNote(context, showQuickActionButtonOnDispose: false);
   }
 }

@@ -25,7 +25,8 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
   initState() {
     super.initState();
     extraFormFields = _buildNoteFormFields();
-    extraInputs = extraFormFields.map((field) => field.builder(context)).toList();
+    extraInputs =
+        extraFormFields.map((field) => field.builder(context)).toList();
   }
 
   @override
@@ -84,7 +85,8 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                             )),
                         SliverToBoxAdapter(
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                            padding: const EdgeInsets.only(
+                                left: 16, right: 16, top: 16, bottom: 8),
                             child: TextField(
                               controller: _messageController,
                               autocorrect: true,
@@ -102,7 +104,8 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 4),
                                 child: extraInputs[index],
                               );
                             },
@@ -137,7 +140,8 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                           listenable: _messageController,
                           builder: (BuildContext context, _) {
                             return FilledButton(
-                              onPressed: (_isLoading || _messageController.text.isEmpty)
+                              onPressed: (_isLoading ||
+                                      _messageController.text.isEmpty)
                                   ? null
                                   : () async {
                                       setState(() {
@@ -146,13 +150,16 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
 
                                       widget.noteSender
                                           .sendNote(
-                                        imageData: widget.imageData.buffer.asUint8List(),
+                                        imageData: widget.imageData.buffer
+                                            .asUint8List(),
                                         context: context,
                                         message: _messageController.text,
                                         extras: _getExtraValues(),
                                       )
                                           .then((success) {
-                                        if (!success || (success && !mounted)) return;
+                                        if (!success || (success && !mounted)) {
+                                          return;
+                                        }
 
                                         Navigator.of(context).pop();
                                       }).whenComplete(() {
@@ -201,8 +208,14 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
   }
 
   Map<String, dynamic> _getExtraValues() {
-    return Map.fromEntries(extraFormFields.where((extra) => extra.controller.text.isNotEmpty).map((extra) {
-      return MapEntry(extra.name, extra.type == int ? int.tryParse(extra.controller.text) : extra.controller.text);
+    return Map.fromEntries(extraFormFields
+        .where((extra) => extra.controller.text.isNotEmpty)
+        .map((extra) {
+      return MapEntry(
+          extra.name,
+          extra.type == int
+              ? int.tryParse(extra.controller.text)
+              : extra.controller.text);
     }));
   }
 }
